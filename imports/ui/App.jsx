@@ -40,7 +40,9 @@ class App extends Component {
         <ApolloProvider client={apolloClient}>
           <div className="App container-fluid">
             <div className="App-block row">
+              <div className="App-content col">
                 <Books />
+              </div>
             </div>
           </div>
         </ApolloProvider>

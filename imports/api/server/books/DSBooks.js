@@ -25,13 +25,15 @@ import { SQLDataSource } from "datasource-sql" //error: Converting circular stru
 //   async getBatched(query) {
 //     const queryString = query.toString()
 //     console.log(`queryString: ${JSON.stringify(queryString)}`)
-//     // return this.loader.load(queryString).then(result => result && result.rows)
+//     // return this.loader.load(queryString).then(result => result && result.rows) //result.rows is undefined as rows is not a property of an array
+
 //     // return this.loader.load(queryString).then(result => {
 //     //   console.log(`result: ${JSON.stringify(result)}`)
 //     //   console.log(`result.rows: ${JSON.stringify(result.rows)}`)
 //     //   // return result && result.rows
 //     //   return result
 //     // })
+
 //     return await this.loader.load(queryString)
 //   }
 
@@ -56,7 +58,7 @@ import { SQLDataSource } from "datasource-sql" //error: Converting circular stru
 //       if (entry) return Promise.resolve(entry)
 //       return this.loader
 //         .load(queryString)
-//         // .then(result => result && result.rows)
+//         // .then(result => result && result.rows) //result.rows is undefined as rows is not a property of an array
 //         .then((rows) => {
 //           if (rows) this.cache.set(cacheKey, rows, ttl)
 //           return Promise.resolve(rows)
@@ -68,11 +70,11 @@ import { SQLDataSource } from "datasource-sql" //error: Converting circular stru
 // import { DataSource } from "apollo-datasource"
 // class SQLDataSource extends DataSource {
 //   initialize(config) {
-//     // console.log(`config: ${JSON.stringify(config, null, 2)}`)
 //     console.log(`config.context: ${JSON.stringify(config.context)}`)
 
-//     // this.context = config.context
-//     this.context = Object.assign({}, config.context)
+//     // this.context = config.context //error: Converting circular structure to JSON
+//     this.context = Object.assign({}, config.context) //clone
+
 //     this.db = this.knex
 
 //     this.sqlCache = new SQLCache(config.cache, this.knex)
@@ -85,7 +87,7 @@ import { SQLDataSource } from "datasource-sql" //error: Converting circular stru
 //==============================================================================================================
 
 
-export class DSBooks extends SQLDataSource { //TODO: fix [GraphQL error]: Message: Converting circular structure to JSON, Location: [{"line":2,"column":3}], Path: books
+export class DSBooks extends SQLDataSource {
   constructor() {
     super()
     this.knex = knex1 // Add your instance of Knex to the DataSource
