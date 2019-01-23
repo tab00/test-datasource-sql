@@ -211,8 +211,7 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
-# SKYBIT
-.meteor
+.meteor/local
 settings-d.json
 settings-p.json
 bfg.jar
