@@ -1,0 +1,73 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "allowImportExportEverywhere": true //added to prevent error "Parsing error: 'import' and 'export' may only appear at the top level"
+    },
+    "plugins": [
+        "meteor",
+        "react"
+    ],
+    "extends": [
+        "airbnb",
+        "plugin:meteor/recommended"
+    ],
+    "settings": {
+        "import/resolver": "meteor"
+    },
+    "rules": {
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "max-len": "off",
+        "indent": "off",
+        "comma-dangle": "off",
+        "spaced-comment": "off",
+        "import/extensions": "off",
+        // [
+        //     "error",
+        //     "always",
+        //     {
+        //         "js": "always",
+        //         "html": "always"
+        //     }
+        // ],
+        // "quotes": ["error", "double"],
+        "quotes": "off",
+        "no-console": "off",
+        "import/first": "off",
+        "import/no-duplicates": "off",
+        "no-underscore-dangle": "off",
+        "import/newline-after-import": "off",
+        "no-multiple-empty-lines": "off",
+        "import/prefer-default-export": "off",
+        "semi": ["error", "never"],
+        "no-use-before-define": "off",
+        "react/jsx-filename-extension": "off",
+        "react/jsx-indent": "off",
+        "react/jsx-indent-props": "off",
+        "import/no-extraneous-dependencies": ["off"],
+        "object-curly-newline": ["off"],
+        "import/no-absolute-path": ["off"],
+        "function-paren-newline": ["off"],
+        "func-names": "off",
+        "import/order": "off",
+        "no-nested-ternary": "off",
+        "no-loop-func": "off",
+        "one-var": "off",
+        "class-methods-use-this": "off",
+        "react/destructuring-assignment": "off",
+        "react/jsx-one-expression-per-line": "off",
+        "jsx-a11y/label-has-for": "off",
+        "one-var-declaration-per-line": "off",
+        "no-unused-vars": ["error", { "args": "none" }],
+        "no-return-await": "off"
+    }
+}
