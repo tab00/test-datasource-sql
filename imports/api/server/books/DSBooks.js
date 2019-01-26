@@ -23,7 +23,7 @@ export class DSBooks extends SQLDataSource {
 
     // return await query
     return this.getBatched(query)
-    // return this.getCached(query, MINUTE)
+    return this.getCached(query, MINUTE)
     return this.getBatchedAndCached(query, MINUTE)
   }
 }

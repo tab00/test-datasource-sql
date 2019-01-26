@@ -1,4 +1,4 @@
-//From https://github.com/cvburgess/SQLDataSource
+//From https://github.com/cvburgess/SQLDataSource. //TODO: remove when datasource-sql package works
 
 import { SQLCache } from "/imports/api/server/datasource-sql/SQLCache.js"
 import { DataSource } from "apollo-datasource"

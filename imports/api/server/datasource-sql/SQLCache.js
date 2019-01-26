@@ -1,4 +1,4 @@
-//Adapted from https://github.com/cvburgess/SQLDataSource
+//Adapted from https://github.com/cvburgess/SQLDataSource. //TODO: remove when datasource-sql package works
 
 import { InMemoryLRUCache } from "apollo-server-caching"
 import DataLoader from "dataloader"
