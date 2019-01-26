@@ -5,87 +5,8 @@ const knex1 = knex({
   useNullAsDefault: true
 })
 
-
-
-import { SQLDataSource } from "datasource-sql" //error: Converting circular structure to JSON
-
-//==============================================================================================================
-//SQLDataSource
-
-// import { InMemoryLRUCache } from "apollo-server-caching"
-// import DataLoader from "dataloader"
-
-// class SQLCache {
-//   constructor(cache = new InMemoryLRUCache(), knex2) {
-//     this.cache = cache
-//     this.loader = new DataLoader(rawQueries => Promise.all(rawQueries.map(rawQuery => knex2.raw(rawQuery)))
-//     )
-//   }
-
-//   async getBatched(query) {
-//     const queryString = query.toString()
-//     console.log(`queryString: ${JSON.stringify(queryString)}`)
-//     // return this.loader.load(queryString).then(result => result && result.rows) //result.rows is undefined as rows is not a property of an array
-
-//     // return this.loader.load(queryString).then(result => {
-//     //   console.log(`result: ${JSON.stringify(result)}`)
-//     //   console.log(`result.rows: ${JSON.stringify(result.rows)}`)
-//     //   // return result && result.rows
-//     //   return result
-//     // })
-
-//     return await this.loader.load(queryString)
-//   }
-
-//   getCached(query, ttl) {
-//     const queryString = query.toString()
-//     const cacheKey = `sqlcache:${queryString}`
-
-//     return this.cache.get(cacheKey).then((entry) => {
-//       if (entry) return Promise.resolve(entry)
-//       return query.then((rows) => {
-//         if (rows) this.cache.set(cacheKey, rows, ttl)
-//         return Promise.resolve(rows)
-//       })
-//     })
-//   }
-
-//   getBatchedAndCached(query, ttl) {
-//     const queryString = query.toString()
-//     const cacheKey = `sqlcache:${queryString}`
-
-//     return this.cache.get(cacheKey).then((entry) => {
-//       if (entry) return Promise.resolve(entry)
-//       return this.loader
-//         .load(queryString)
-//         // .then(result => result && result.rows) //result.rows is undefined as rows is not a property of an array
-//         .then((rows) => {
-//           if (rows) this.cache.set(cacheKey, rows, ttl)
-//           return Promise.resolve(rows)
-//         })
-//     })
-//   }
-// }
-
-// import { DataSource } from "apollo-datasource"
-// class SQLDataSource extends DataSource {
-//   initialize(config) {
-//     console.log(`config.context: ${JSON.stringify(config.context)}`)
-
-//     // this.context = config.context //error: Converting circular structure to JSON
-//     this.context = Object.assign({}, config.context) //clone
-
-//     this.db = this.knex
-
-//     this.sqlCache = new SQLCache(config.cache, this.knex)
-//     this.getBatched = query => this.sqlCache.getBatched(query)
-//     this.getCached = (query, ttl) => this.sqlCache.getCached(query, ttl)
-//     this.getBatchedAndCached = (query, ttl) => this.sqlCache.getBatchedAndCached(query, ttl)
-//   }
-// }
-
-//==============================================================================================================
-
+// import { SQLDataSource } from "datasource-sql" // https://github.com/cvburgess/SQLDataSource. error: Converting circular structure to JSON
+import { SQLDataSource } from "/imports/api/server/datasource-sql/SQLDataSource.js" //TODO: remove when datasource-sql package works
 
 export class DSBooks extends SQLDataSource {
   constructor() {
@@ -101,16 +22,9 @@ export class DSBooks extends SQLDataSource {
     const MINUTE = 60 * 1000
 
     return await query
-    // return this.getBatched(query)
-    // return this.getCached(query, MINUTE)
-    // return this.getBatchedAndCached(query, MINUTE)
-  }
-
-  async bookAdd({ book }) {
-    console.log(`In data source function bookAdd. book: ${JSON.stringify(book)}`)
-
-    return await knex1("books").insert(book)
-      .then(idArray => Object.assign(book, { id: idArray[0] }))
+    return this.getBatched(query)
+    return this.getCached(query, MINUTE)
+    return this.getBatchedAndCached(query, MINUTE)
   }
 }
 
@@ -125,16 +39,13 @@ export const booksTableInit = async () => knex1.schema.createTable("books", (tab
     knex1("books").insert({ title: "Harry Potter and the Chamber of Secrets", author: "J.K. Rowling", idOfOwner: "f892jkf3" })
       .then(idArray => console.log(`Inserted book. idArray: ${JSON.stringify(idArray)}`))
 
-    knex1("books").insert({ title: "Jurassic Park", author: "Michael Crichton", idOfOwner: "f83kfw" })
+    return knex1("books").insert({ title: "Jurassic Park", author: "Michael Crichton", idOfOwner: "f83kfw" })
       .then(idArray => console.log(`Inserted book. idArray: ${JSON.stringify(idArray)}`))
-
-    return null //To prevent Warning: a promise was created in a handler
   })
-  .then(() => {
-    knex1.select().from("books")
+  .then(() => knex1.select().from("books")
       .then((books) => {
         console.log(`books: ${JSON.stringify(books)}`)
-      })
-    return null
-  })
+
+        return books.length > 0
+      }))
   .catch(error => console.log(error))

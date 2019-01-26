@@ -9,30 +9,21 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.3.1",
-    "apollo-cache-inmemory": "^1.4.2",
-    "apollo-client": "^2.4.12",
     "apollo-link": "^1.2.6",
-    "apollo-link-error": "^1.1.5",
     "apollo-link-http": "^1.5.9",
-    "apollo-server-caching": "^0.2.1",
-    "apollo-server-express": "^2.3.1",
+    "apollo-server-caching": "^0.2.2",
+    "apollo-server-express": "^2.3.2",
     "dataloader": "^1.4.0",
     "datasource-sql": "^0.1.4",
     "graphql": "^14.1.1",
     "knex": "^0.16.3",
-    "meteor-node-stubs": "^0.4.1",
     "node-fetch": "^2.3.0",
-    "prop-types": "^15.6.2",
-    "react": "^16.7.0",
-    "react-apollo": "^2.4.0",
-    "react-dom": "^16.7.0",
     "sqlite3": "^4.0.6"
   },
   "meteor": {
     "mainModule": {
       "client": "client/main.js",
       "server": "server/main.js"
-    },
-    "testModule": "tests/main.js"
+    }
   }
 }
