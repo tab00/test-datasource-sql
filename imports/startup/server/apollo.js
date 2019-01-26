@@ -3,7 +3,7 @@ export const apolloServerInit = () => {
   import { typeDefs } from "/imports/api/server/schema.js"
   import { resolvers } from "/imports/api/server/resolvers.js"
   import { DSBooks } from "/imports/api/server/books/DSBooks.js"
-  // import { getUser } from "meteor/apollo"
+  import { getUser } from "meteor/apollo"
 
   const server = new ApolloServer({
     typeDefs,
@@ -11,19 +11,19 @@ export const apolloServerInit = () => {
     dataSources: () => ({
       dsBooks: new DSBooks()
     }),
-    // context: async ({ req, connection }) => {
-    //   if (connection) { // check connection for metadata
-    //     // console.log(`connection: ${JSON.stringify(connection)}`)
+    context: async ({ req, connection }) => {
+      if (connection) { // check connection for metadata
+        // console.log(`connection: ${JSON.stringify(connection)}`)
 
-    //     const token = req.headers.authorization || ""
-    //     return { token }
-    //   } // check from req
-    //   // const token = req.headers.authorization || ""
-    //   // return { token }
+        const token = req.headers.authorization || ""
+        return { token }
+      } // check from req
+      // const token = req.headers.authorization || ""
+      // return { token }
 
-    //   console.log(`req.headers.authorization: ${JSON.stringify(req.headers.authorization)}`)
-    //   return { user: await getUser(req.headers.authorization) }
-    // },
+      console.log(`req.headers.authorization: ${JSON.stringify(req.headers.authorization)}`)
+      return { user: await getUser(req.headers.authorization) }
+    },
   })
 
 

@@ -13,11 +13,11 @@ export class SQLCache {
   async getBatched(query) {
     const queryString = query.toString()
     console.log(`queryString: ${JSON.stringify(queryString)}`)
-    // return this.loader.load(queryString).then(result => result && result.rows) //result.rows is undefined as rows is not a property of an array
+    // return this.loader.load(queryString).then(result => result && result.rows) //result.rows is undefined
 
     // return this.loader.load(queryString).then(result => {
     //   console.log(`result: ${JSON.stringify(result)}`)
-    //   console.log(`result.rows: ${JSON.stringify(result.rows)}`)
+    //   console.log(`result.rows: ${JSON.stringify(result.rows)}`) //an array is returned when using SQLite DB. rows is not a property of an array
     //   // return result && result.rows
     //   return result
     // })
